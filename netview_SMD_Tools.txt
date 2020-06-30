@@ -1,0 +1,3 @@
+SMD (Studiomdl Data) Tools.
+
+License: GNU GPL v3
