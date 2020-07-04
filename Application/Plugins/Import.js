@@ -6,58 +6,66 @@ var mat_dir = "";
 
 function Main(args) // , model_name, parent
 {
-	if (args) 
+	if (args == null) 
 	{
-		var args = args.split("#");
-	
-		//  get arguments (file_path, model_name, parent)
-		var file_path = args[0];
-		var name = file_path.replace(/^.*[\\\/]/, '').split('.')[0];
-		var model_name = args[1];
-		var parent = args[2];
-
-		oRoot = Application.ActiveProject.ActiveScene.Root;
-
-		if(parent != "")
-		{
-			parent = oRoot.FindChild(parent);
-		}
-		
-		// LogMessage(file_path + "# " + parent + " "+ model_name )
-		// return;
-
-		if(model_name!= "") { name = model_name; }
-
-		// var start_total =  0.001 * new Date();
-	
-		init_vars();
-		
-		lines = readfile(file_path).split('\n');
-
-		//  if no material directory is specified, set it to the smd model directory
-		if(mat_dir == "") { mat_dir = get_FileDir(file_path); } //  model directory }
-		
-		//  if parent is defined, otherwise create the model under the scene's root
-		if(parent != "")
-		{
-			oModel = parent.AddModel(null, name);
-		} 
-		else 
-		{
-			oModel = oRoot.AddModel(null, name);
-		}
-		
-		parse_smd_text();
-		build_mesh();
-		build_rig();
-		import_normals();
-		import_UVs();
-		import_envelope();
-		create_MatClusters();
-
-		// var elapse_total = 0.001 * new Date() - start_total;  
-		// logmessage("SMD Import time: " + XSIRound(elapse_total, 3) + " seconds" );		
+		logmessage("Main() input arguments is null.", siError);
+		retrun false;
 	}
+	
+	var args = args.split("#");
+	
+	if (args.length == 0) 
+	{
+		logmessage("Main() input arguments count = zero.", siError);
+		retrun false;
+	}
+
+	//  get arguments (file_path, model_name, parent)
+	var file_path = args[0];
+	var name = file_path.replace(/^.*[\\\/]/, '').split('.')[0];
+	var model_name = args[1];
+	var parent = args[2];
+
+	oRoot = Application.ActiveProject.ActiveScene.Root;
+
+	if(parent != "")
+	{
+		parent = oRoot.FindChild(parent);
+	}
+	
+
+	if(model_name!= "") { name = model_name; }
+
+	// var start_total =  0.001 * new Date();
+
+	init_vars();
+	
+	lines = readfile(file_path).split('\n');
+
+	//  if no material directory is specified, set it to the smd model directory
+	if(mat_dir == "") { mat_dir = get_FileDir(file_path); } //  model directory }
+	
+	//  if parent is defined, otherwise create the model under the scene's root
+	if(parent != "")
+	{
+		oModel = parent.AddModel(null, name);
+	} 
+	else 
+	{
+		oModel = oRoot.AddModel(null, name);
+	}
+	
+	parse_smd_text();
+	build_mesh();
+	build_rig();
+	import_normals();
+	import_UVs();
+	import_envelope();
+	create_MatClusters();
+
+	// var elapse_total = 0.001 * new Date() - start_total;  
+	// logmessage("SMD Import time: " + XSIRound(elapse_total, 3) + " seconds" );		
+	
 	
 	return true;
 }
