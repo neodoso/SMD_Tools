@@ -12,7 +12,7 @@ function XSILoadPlugin( in_reg )
 	in_reg.Author = "Miguel Melara";
 	in_reg.Name = "SMD Tools";
 	in_reg.Email = "https://twitter.com/neodos_";
-	in_reg.URL = "http://www.bonkboy.com";
+	in_reg.URL = "";
 	in_reg.Major = 1;
 	in_reg.Minor = 0;
 	
